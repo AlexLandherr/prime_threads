@@ -10,7 +10,6 @@
 #include <atomic>
 #include "include/functions.h"
 
-//bool is_prime(const int64_t &n);
 void primes_in_range(const int64_t &lower_limit, const int64_t &upper_limit);
 
 std::atomic<int64_t> prime_count = 0;
