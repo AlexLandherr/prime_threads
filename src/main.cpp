@@ -6,7 +6,6 @@
 #include <cmath>
 #include <vector>
 #include <numeric>
-#include <mutex>
 #include <atomic>
 #include "include/functions.h"
 
@@ -16,13 +15,23 @@ std::atomic<int64_t> prime_count = 0;
 
 int main() {
     using namespace std::chrono_literals;
-    //int thread_count = std::thread::hardware_concurrency();
-    int64_t thread_count = 4;
+    int thread_count = std::thread::hardware_concurrency();
+    switch (thread_count) {
+        case 0:
+            std::cout << "Implementation does not seem to support 'std::thread::hardware_concurrency()'." << '\n';
+            std::exit(EXIT_FAILURE);
+        case 1:
+            std::cout << "System only suppports a single thread." << '\n';
+            break;
+        default:
+            std::cout << "System supports " << thread_count << " threads." << '\n';
+            break;
+    }
     constexpr int repeat_val = 10;
-    int64_t iteration_length_arr[repeat_val];
-    double avg_search_time = 0.0;
-    constexpr int64_t lower_search_limit = 1;
-    constexpr int64_t upper_search_limit = 100000000;
+    uint64_t iteration_length_arr[repeat_val];
+    long double avg_search_time = 0.0;
+    constexpr uint64_t lower_search_limit = 1;
+    constexpr uint64_t upper_search_limit = 100000000;
     int remainder_range_start = 0;
     int remainder_range_end = 0;
     int start_of_range[thread_count] = {};
@@ -31,7 +40,7 @@ int main() {
     std::string yes_choices[] = {"Y", "y", "Yes", "yes"};
     std::string no_choices[] = {"N", "n", "No", "no"};
     
-    auto result = std::div(upper_search_limit, thread_count);
+    auto result = std::div(upper_search_limit, (long) thread_count);
     std::cout << "Numerator: " << upper_search_limit << '\n';
     std::cout << "Denominator (also how many threads): " << thread_count << '\n';
     std::cout << "Quotient: " << result.quot << '\n';
@@ -84,7 +93,7 @@ int main() {
                 remainder_thread.join();
             }
             auto iteration_stop_time = std::chrono::steady_clock::now();
-            std::chrono::duration<int64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
+            std::chrono::duration<uint64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
             iteration_length_arr[k] = elapsed_single_iteration.count(); //store elapsed_single_iteration nanoseconds in iteration_length_arr.
             std::cout << elapsed_single_iteration.count() << '\n';
         }
@@ -92,8 +101,8 @@ int main() {
         avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
 
         auto prog_stop_time = std::chrono::steady_clock::now();
-        std::chrono::duration<int64_t, std::nano> elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
-        int64_t prog_runtime_nanoseconds = elapsed_prog_runtime.count();
+        std::chrono::duration<uint64_t, std::nano> elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
+        uint64_t prog_runtime_nanoseconds = elapsed_prog_runtime.count();
 
         std::cout << "Prime benchmark is done!" << '\n';
 
@@ -103,9 +112,9 @@ int main() {
         std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
         std::cout << "\n";
         std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-        std::cout << func::to_days_hours_minutes_seconds((int64_t) avg_search_time) << '\n';
+        std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
         std::cout << "\n";
-        std::cout << "Average search time: " << (int64_t) avg_search_time << " ns" << '\n';
+        std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
         std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
     } else if (std::find(std::begin(no_choices), std::end(no_choices), choice) != std::end(no_choices)) {
         std::cout << "Exited program." << '\n';
