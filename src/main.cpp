@@ -9,9 +9,9 @@
 #include <atomic>
 #include "include/functions.h"
 
-void primes_in_range(const int64_t &lower_limit, const int64_t &upper_limit);
+void primes_in_range(const uint64_t &lower_limit, const uint64_t &upper_limit);
 
-std::atomic<int64_t> prime_count = 0;
+std::atomic<unsigned int> prime_count = 0;
 
 int main() {
     using namespace std::chrono_literals;
@@ -34,8 +34,8 @@ int main() {
     constexpr uint64_t upper_search_limit = 100000000;
     int remainder_range_start = 0;
     int remainder_range_end = 0;
-    int start_of_range[thread_count] = {};
-    int end_of_range[thread_count] = {};
+    uint64_t start_of_range[thread_count] = {};
+    uint64_t end_of_range[thread_count] = {};
     std::string choice;
     std::string yes_choices[] = {"Y", "y", "Yes", "yes"};
     std::string no_choices[] = {"N", "n", "No", "no"};
@@ -126,9 +126,9 @@ int main() {
     return 0;
 }
 
-void primes_in_range(const int64_t &lower_limit, const int64_t &upper_limit) {
-    int64_t count = 0;
-    for (int64_t i = lower_limit; i < upper_limit + 1; i++) {
+void primes_in_range(const uint64_t &lower_limit, const uint64_t &upper_limit) {
+    unsigned int count = 0;
+    for (uint64_t i = lower_limit; i < upper_limit + 1; i++) {
         if (func::prime::is_prime(i)) {
             count++;
         }
