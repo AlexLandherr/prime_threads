@@ -10,7 +10,7 @@ namespace func {
 
     namespace prime {
 
-        bool is_prime(const int64_t &n) {
+        bool is_prime(int64_t n) {
             if (n <= 1) {
                 return false;
             } else if (n == 2) {
@@ -19,7 +19,7 @@ namespace func {
                 return false;
             }
 
-            int64_t max_divisor = std::floor(std::sqrt((long double) n));
+            int64_t max_divisor = std::ceil(std::sqrt((long double) n));
             for (int64_t d = 3; d < max_divisor + 1; d+=2) {
                 if (n % d == 0) {
                     return false;

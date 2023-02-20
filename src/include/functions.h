@@ -6,7 +6,7 @@
 namespace func {
     
     namespace prime {
-        bool is_prime(const int64_t &n);
+        bool is_prime(int64_t n);
     }
 
     std::string to_days_hours_minutes_seconds(uint64_t nanoseconds);

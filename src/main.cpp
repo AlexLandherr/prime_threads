@@ -9,7 +9,7 @@
 #include <atomic>
 #include "include/functions.h"
 
-void primes_in_range(const uint64_t &lower_limit, const uint64_t &upper_limit);
+void primes_in_range(uint64_t lower_limit, uint64_t upper_limit);
 
 std::atomic<unsigned int> prime_count = 0;
 
@@ -126,7 +126,7 @@ int main() {
     return 0;
 }
 
-void primes_in_range(const uint64_t &lower_limit, const uint64_t &upper_limit) {
+void primes_in_range(uint64_t lower_limit, uint64_t upper_limit) {
     unsigned int count = 0;
     for (uint64_t i = lower_limit; i < upper_limit + 1; i++) {
         if (func::prime::is_prime(i)) {
