@@ -27,6 +27,8 @@ int main() {
             std::cout << "System supports " << thread_count << " threads." << '\n';
             break;
     }
+    std::cout << "    ****    " << '\n';
+
     constexpr int repeat_val = 10;
     uint64_t iteration_length_arr[repeat_val];
     long double avg_search_time = 0.0;
@@ -39,89 +41,162 @@ int main() {
     std::string choice;
     std::string yes_choices[] = {"Y", "y", "Yes", "yes"};
     std::string no_choices[] = {"N", "n", "No", "no"};
+    int valid_modes[] = {0, 1, 2};
+    int mode_select = 0;
+
+    std::chrono::_V2::steady_clock::time_point prog_start_time;
+    std::chrono::_V2::steady_clock::time_point prog_stop_time;
+    uint64_t prog_runtime_nanoseconds = 0;
+    std::chrono::duration<uint64_t, std::nano> elapsed_prog_runtime;
+
+    ldiv_t result;
+
+    std::cout << "Search limit for all options are (both are inclusive limits):" << '\n';
+    std::cout << "Lower search limit: " << lower_search_limit << '\n';
+    std::cout << "Upper search limit: " << upper_search_limit << '\n';
+
+    std::cout << '\n';
     
-    auto result = std::div(upper_search_limit, (long) thread_count);
-    std::cout << "Numerator: " << upper_search_limit << '\n';
-    std::cout << "Denominator (also how many threads): " << thread_count << '\n';
-    std::cout << "Quotient: " << result.quot << '\n';
-    std::cout << "Remainder: " << result.rem << '\n';
-    std::cout << "  ****  " << '\n';
-    
-    //Calculating start and end vales for the ranges.
-    for (int i = 0; i < thread_count; i++) {
-        if (i == 0) {
-            start_of_range[i] = lower_search_limit;
-            end_of_range[i] = result.quot;
+    while (true) {
+        std::cout << "Select benchmark mode from list below:" << '\n';
+        std::cout << "0. Single-threaded benchmark." << '\n';
+        std::cout << "1. Multi-threaded benchmark (" << thread_count << " threads)." << '\n';
+        std::cout << "2. Exit program." << '\n';
+        std::cout << "Enter one of the listed values: ";
+        std::cin >> mode_select;
+        if (std::find(std::begin(valid_modes), std::end(valid_modes), mode_select) != std::end(valid_modes)) {
+            break;
         } else {
-            start_of_range[i] = end_of_range[i - 1] + 1;
-            end_of_range[i] = (start_of_range[i] - 1) + result.quot;
+            std::cout << "Invalid mode select, try again!" << '\n';
         }
     }
+
+    switch (mode_select) {
+        case 0:
+            //Singlethreaded.
+            std::cout << '\n';
+            std::cout << "Starting singlethreaded benchmark..." << '\n';
+            prog_start_time = std::chrono::steady_clock::now();
+
+            for (int k = 0; k < repeat_val; k++) {
+                std::cout << "Iteration " << (k + 1) << " of " << repeat_val << " Runtime (ns): ";
+                auto iteration_start_time = std::chrono::steady_clock::now();
+
+                primes_in_range(lower_search_limit, upper_search_limit);
+
+                auto iteration_stop_time = std::chrono::steady_clock::now();
+                std::chrono::duration<uint64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
+                iteration_length_arr[k] = elapsed_single_iteration.count(); //store elapsed_single_iteration nanoseconds in iteration_length_arr.
+                std::cout << elapsed_single_iteration.count() << '\n';
+            }
+
+            avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
+
+            prog_stop_time = std::chrono::steady_clock::now();
+            elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
+            prog_runtime_nanoseconds = elapsed_prog_runtime.count();
+
+            std::cout << "Prime singlethreaded benchmark is done!" << '\n';
+
+            std::cout << "\n**** Results ****" << '\n';
+            std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            std::cout << "\n";
+            std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
+            std::cout << "\n";
+            std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
+            std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            std::cout << "\n";
+            std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
+            std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
+
+            break;
+        case 1:
+            //Multithreaded.
+            std::cout << '\n';
+            result = std::div(upper_search_limit, (long) thread_count);
+            std::cout << "Numerator (also upper search limit): " << upper_search_limit << '\n';
+            std::cout << "Denominator (also how many threads): " << thread_count << '\n';
+            std::cout << "Quotient: " << result.quot << '\n';
+            std::cout << "Remainder: " << result.rem << '\n';
+            std::cout << "  ****  " << '\n';
     
-    //Calculating start and end values for remainder range.
-    if (result.rem != 0) {
-        remainder_range_start = (upper_search_limit - result.rem) + 1;
-        remainder_range_end = upper_search_limit;
-    }
-
-    std::cout << "Start prime_threads between " << lower_search_limit << " and " << upper_search_limit << "? [Y/n]: ";
-    std::cin >> choice;
-    if (std::find(std::begin(yes_choices), std::end(yes_choices), choice) != std::end(yes_choices)) {
-        std::cout << "Starting multithreaded prime benchmark..." << '\n';
-        auto prog_start_time = std::chrono::steady_clock::now();
-
-        for (int k = 0; k < repeat_val; k++) {
-            std::cout << "Iteration " << (k + 1) << " of " << repeat_val << " Runtime (ns): ";
-            //Create vector to hold main thread objects.
-            std::vector<std::thread> main_threads;
-
-            auto iteration_start_time = std::chrono::steady_clock::now();
-            //Create and start main threads.
+            //Calculating start and end vales for the ranges.
             for (int i = 0; i < thread_count; i++) {
-                main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
+                if (i == 0) {
+                    start_of_range[i] = lower_search_limit;
+                    end_of_range[i] = result.quot;
+                } else {
+                    start_of_range[i] = end_of_range[i - 1] + 1;
+                    end_of_range[i] = (start_of_range[i] - 1) + result.quot;
+                }
             }
-
-            //Join main threads.
-            for (auto &th : main_threads) {
-                th.join();
-            }
-
-            //Create remainder thread (if needed).
+    
+            //Calculating start and end values for remainder range.
             if (result.rem != 0) {
-                std::thread remainder_thread = std::thread(primes_in_range, remainder_range_start, remainder_range_end);
-                
-                remainder_thread.join();
+                remainder_range_start = (upper_search_limit - result.rem) + 1;
+                remainder_range_end = upper_search_limit;
             }
-            auto iteration_stop_time = std::chrono::steady_clock::now();
-            std::chrono::duration<uint64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
-            iteration_length_arr[k] = elapsed_single_iteration.count(); //store elapsed_single_iteration nanoseconds in iteration_length_arr.
-            std::cout << elapsed_single_iteration.count() << '\n';
+
+            std::cout << "Starting multithreaded prime benchmark..." << '\n';
+            prog_start_time = std::chrono::steady_clock::now();
+
+            for (int k = 0; k < repeat_val; k++) {
+                std::cout << "Iteration " << (k + 1) << " of " << repeat_val << " Runtime (ns): ";
+                //Create vector to hold main thread objects.
+                std::vector<std::thread> main_threads;
+
+                auto iteration_start_time = std::chrono::steady_clock::now();
+                //Create and start main threads.
+                for (int i = 0; i < thread_count; i++) {
+                    main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
+                }
+
+                //Join main threads.
+                for (auto &th : main_threads) {
+                    th.join();
+                }
+
+                //Create remainder thread (if needed).
+                if (result.rem != 0) {
+                    std::thread remainder_thread = std::thread(primes_in_range, remainder_range_start, remainder_range_end);
+                        
+                    remainder_thread.join();
+                }
+
+                auto iteration_stop_time = std::chrono::steady_clock::now();
+                std::chrono::duration<uint64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
+                iteration_length_arr[k] = elapsed_single_iteration.count(); //store elapsed_single_iteration nanoseconds in iteration_length_arr.
+                std::cout << elapsed_single_iteration.count() << '\n';
+            }
+
+            avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
+
+            prog_stop_time = std::chrono::steady_clock::now();
+            elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
+            prog_runtime_nanoseconds = elapsed_prog_runtime.count();
+
+            std::cout << "Prime multithreaded benchmark is done!" << '\n';
+
+            std::cout << "\n**** Results ****" << '\n';
+            std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            std::cout << "\n";
+            std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
+            std::cout << "\n";
+            std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
+            std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            std::cout << "\n";
+            std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
+            std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
+
+            break;
+        case 2:
+            //Exit program.
+            std::cout << "Exited program." << '\n';
+            break;
+        default:
+            std::cout << "Defaulted to exiting program since no valid input was made." << '\n';
+            std::exit(EXIT_FAILURE);
         }
-
-        avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
-
-        auto prog_stop_time = std::chrono::steady_clock::now();
-        std::chrono::duration<uint64_t, std::nano> elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
-        uint64_t prog_runtime_nanoseconds = elapsed_prog_runtime.count();
-
-        std::cout << "Prime benchmark is done!" << '\n';
-
-        std::cout << "\n**** Results ****" << '\n';
-        std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
-        std::cout << "\n";
-        std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
-        std::cout << "\n";
-        std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-        std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
-        std::cout << "\n";
-        std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
-        std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
-    } else if (std::find(std::begin(no_choices), std::end(no_choices), choice) != std::end(no_choices)) {
-        std::cout << "Exited program." << '\n';
-    } else if (!(std::find(std::begin(yes_choices), std::end(yes_choices), choice) != std::end(yes_choices)) && 
-            !(std::find(std::begin(no_choices), std::end(no_choices), choice) != std::end(no_choices))) {
-        std::cout << "Command not valid; please restart program and try again." << '\n';
-    }
     
     return 0;
 }
