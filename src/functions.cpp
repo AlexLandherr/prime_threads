@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <ctime>
 
 namespace func {
 
@@ -59,6 +60,14 @@ namespace func {
     std::string zero_padded_num(std::string str, size_t field_width) {
         int precision = field_width - std::min(field_width, str.size());
         return std::string(precision, '0').append(str);
+    }
+
+    std::string to_UTC(std::chrono::system_clock::time_point now) {
+        //Convert a system clock time point to UTC and return time as a std::string with format "yyyy-mm-dd hh:mm:ss".
+        std::time_t time = std::chrono::system_clock::to_time_t(now);
+        char timeString[std::size("yyyy-mm-dd hh:mm:ss UTC")];
+        std::strftime(std::data(timeString), std::size(timeString), "%F %T UTC", std::gmtime(&time));
+        return timeString;
     }
 
 }
