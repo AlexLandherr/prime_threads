@@ -17,7 +17,7 @@ std::atomic<unsigned int> prime_count = 0;
 
 int main() {
     using namespace std::chrono_literals;
-    int thread_count = std::thread::hardware_concurrency();
+    auto thread_count = std::thread::hardware_concurrency();
     switch (thread_count) {
         case 0:
             std::cout << "Implementation does not seem to support 'std::thread::hardware_concurrency()'." << '\n';
@@ -78,6 +78,7 @@ int main() {
             //Singlethreaded.
             std::cout << '\n';
             std::cout << "Starting singlethreaded benchmark..." << '\n';
+            
             //Log UTC time and print to std::cout.
             auto UTC_start_time = std::chrono::system_clock::now();
             std::cout << "\nStarted at: " << func::to_UTC(UTC_start_time) << '\n';
@@ -133,7 +134,7 @@ int main() {
             std::cout << "  ****  " << '\n';
     
             //Calculating start and end vales for the ranges.
-            for (int i = 0; i < thread_count; i++) {
+            for (unsigned int i = 0; i < thread_count; i++) {
                 if (i == 0) {
                     start_of_range.push_back(lower_search_limit);
                     end_of_range.push_back(result.quot);
@@ -162,7 +163,7 @@ int main() {
 
                 auto iteration_start_time = std::chrono::steady_clock::now();
                 //Create and start main threads.
-                for (int i = 0; i < thread_count; i++) {
+                for (unsigned int i = 0; i < thread_count; i++) {
                     main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
                 }
 
