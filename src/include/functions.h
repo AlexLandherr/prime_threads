@@ -13,6 +13,7 @@ namespace func {
     std::string to_days_hours_minutes_seconds(uint64_t nanoseconds);
     std::string zero_padded_num(std::string str, size_t field_width);
     std::string to_UTC(std::chrono::system_clock::time_point now);
+    std::string replace_char(char target_char, char replacement_char, std::string target_str);
 }
 
 #endif

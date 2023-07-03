@@ -33,3 +33,6 @@
 
 # Executable binary file 
 prime_threads
+
+# Result log file(s)
+*.txt

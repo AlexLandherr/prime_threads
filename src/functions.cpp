@@ -70,4 +70,10 @@ namespace func {
         return timeString;
     }
 
+    std::string replace_char(char target_char, char replacement_char, std::string target_str) {
+        //Replace all occurrences of a given char in a std::string with another.
+        std::replace(target_str.begin(), target_str.end(), target_char, replacement_char);
+        return target_str;
+    }
+
 }
