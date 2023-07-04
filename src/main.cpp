@@ -127,7 +127,7 @@ int main() {
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
 
             //Writing results to unique log file with time stamp as file name.
-            std::fstream log_fs{"Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
+            std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
             log_fs << "**** Results ****" << '\n';
             log_fs << "Program mode is: Singlethreaded" << '\n';
             log_fs << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
@@ -234,7 +234,7 @@ int main() {
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
 
             //Writing results to unique log file with time stamp as file name.
-            std::fstream log_fs{"Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
+            std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
             log_fs << "**** Results ****" << '\n';
             log_fs << "Program mode is: Multithreaded" << '\n';
             log_fs << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
@@ -264,7 +264,7 @@ int main() {
         auto UTC_prog_stop_time = std::chrono::system_clock::now();
 
         //Write start and end UTC times for complete program run.
-        std::fstream log_fs{"Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
+        std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
         log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
         log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
     

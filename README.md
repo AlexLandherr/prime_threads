@@ -14,6 +14,10 @@ Create a directory called `obj`:
 ```
 mkdir obj
 ```
+Create a directory called `logs`:
+```
+mkdir logs
+```
 
 Then build & compile using `make`:
 ```
