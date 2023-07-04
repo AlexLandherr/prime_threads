@@ -36,7 +36,7 @@ int main() {
     std::string log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
 
     constexpr int repeat_val = 10;
-    std::array<long double, repeat_val> iteration_length_arr;
+    std::array<uint64_t, repeat_val> iteration_length_arr;
     long double avg_search_time = 0.0;
     constexpr uint64_t lower_search_limit = 1;
     constexpr uint64_t upper_search_limit = 100000000;
@@ -141,6 +141,10 @@ int main() {
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
+            log_fs << "\n**** Runtime for each iteration ****" << '\n';
+            for (int i = 0; i < repeat_val; i++) {
+                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << (uint64_t) iteration_length_arr[i] << '\n';
+            }
             log_fs << '\n';
 
             break;
@@ -221,6 +225,7 @@ int main() {
 
             std::cout << "\n**** Results ****" << '\n';
             std::cout << "Program mode is: Multithreaded" << '\n';
+            std::cout << "Thread count: " << thread_count << '\n';
             std::cout << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
             std::cout << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
             std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
@@ -237,6 +242,7 @@ int main() {
             std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
             log_fs << "**** Results ****" << '\n';
             log_fs << "Program mode is: Multithreaded" << '\n';
+            log_fs << "Thread count: " << thread_count << '\n';
             log_fs << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
             log_fs << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
             log_fs << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
@@ -248,6 +254,10 @@ int main() {
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
+            log_fs << "\n**** Runtime for each iteration ****" << '\n';
+            for (int i = 0; i < repeat_val; i++) {
+                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << (uint64_t) iteration_length_arr[i] << '\n';
+            }
             log_fs << '\n';
 
             break;
