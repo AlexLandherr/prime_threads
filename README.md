@@ -60,3 +60,54 @@ Program ended at: 2023-07-05 08:34:11 UTC
 A run on a 96-core Ampere Altra ARM CPU courtesy of Jeff Geerling
 - https://github.com/geerlingguy/sbc-reviews/issues/19
 - https://github.com/geerlingguy/sbc-reviews/issues/19#issuecomment-1620919247
+```
+jgeerling@adlink-ampere:~/prime_threads$ ./prime_threads
+System supports 96 threads.
+    ****    
+Search limit for all options are (both are inclusive limits):
+Lower search limit: 1
+Upper search limit: 100000000
+
+Select benchmark mode from list below:
+0. Single-threaded benchmark.
+1. Multi-threaded benchmark (96 threads).
+2. Exit program.
+Enter one of the listed values: 1
+
+Numerator (also upper search limit): 100000000
+Denominator (also how many threads): 96
+Quotient: 1041666
+Remainder: 64
+  ****  
+Starting multithreaded prime benchmark...
+
+Started at: 2023-07-05 02:10:34 UTC
+Iteration 1 of 10 Runtime (ns): 1650924933
+Iteration 2 of 10 Runtime (ns): 1381674931
+Iteration 3 of 10 Runtime (ns): 1381530659
+Iteration 4 of 10 Runtime (ns): 1381874490
+Iteration 5 of 10 Runtime (ns): 1382733573
+Iteration 6 of 10 Runtime (ns): 1380218386
+Iteration 7 of 10 Runtime (ns): 1392295779
+Iteration 8 of 10 Runtime (ns): 1380862075
+Iteration 9 of 10 Runtime (ns): 1381572084
+Iteration 10 of 10 Runtime (ns): 1381265241
+Prime multithreaded benchmark is done!
+
+Stopped at: 2023-07-05 02:10:48 UTC
+
+**** Results ****
+Program mode is: Multithreaded
+Thread count: 96
+Search started at: 2023-07-05 02:10:34 UTC
+Search ended at: 2023-07-05 02:10:48 UTC
+Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:00:14.095112951
+
+Program ran for: 14095112951 ns
+
+Average time to find all primes between 1 and 100000000 was (DD:HH:MM:SS.SSSSSSSSS):
+00:00:00:01.409495215
+
+Average search time: 1409495215 ns
+Number of primes found is: 5761455
+```
