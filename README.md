@@ -23,3 +23,9 @@ Run:
 ```
 ./prime_threads
 ```
+
+# Performance Examples
+Run on my development machine which sports an i7-12700H and runs Ubuntu 22.04.2 LTS 64-bit:
+```
+
+```
