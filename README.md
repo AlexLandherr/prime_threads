@@ -10,15 +10,10 @@ Change directory to repo:
 ```
 cd prime_threads/
 ```
-Create a directory called `obj`:
+Create a directory called `obj` and `logs`:
 ```
-mkdir obj
+mkdir {obj,logs}
 ```
-Create a directory called `logs`:
-```
-mkdir logs
-```
-
 Then build & compile using `make`:
 ```
 make
