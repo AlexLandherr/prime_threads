@@ -57,9 +57,9 @@ Program started at: 2023-07-05 08:33:04 UTC
 Program ended at: 2023-07-05 08:34:11 UTC
 ```
 
-A run on a 96-core Ampere Altra ARM CPU courtesy of @geerlingguy:
-- https://github.com/geerlingguy/sbc-reviews/issues/19
-- https://github.com/geerlingguy/sbc-reviews/issues/19#issuecomment-1620919247
+A run on a 96-core Ampere Altra ARM CPU thanks to @geerlingguy:
+- [Ampere Altra Developer Platform](https://github.com/geerlingguy/sbc-reviews/issues/19)
+- [Link to Jeff Geerling's results](https://github.com/geerlingguy/sbc-reviews/issues/19#issuecomment-1620919247)
 ```
 jgeerling@adlink-ampere:~/prime_threads$ ./prime_threads
 System supports 96 threads.
