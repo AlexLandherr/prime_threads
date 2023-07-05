@@ -59,4 +59,4 @@ Program ended at: 2023-07-05 08:34:11 UTC
 
 A run on a 96-core Ampere Altra ARM CPU courtesy of Jeff Geerling
 - https://github.com/geerlingguy/sbc-reviews/issues/19
-- 
+- https://github.com/geerlingguy/sbc-reviews/issues/19#issuecomment-1620919247
