@@ -1,4 +1,5 @@
 #include "include/functions.h"
+#include <iostream>
 #include <cmath>
 #include <string>
 #include <numeric>
@@ -6,12 +7,16 @@
 #include <iomanip>
 #include <algorithm>
 #include <ctime>
+#include <stdexcept>
 
 namespace func {
 
     namespace prime {
 
         bool is_prime(int64_t n) {
+            if (n > std::numeric_limits<int64_t>::max() || n < std::numeric_limits<int64_t>::min()) {
+                throw std::invalid_argument("Argument 'n' is out of range for 'int64_t' type.");
+            }
             if (n <= 1) {
                 return false;
             } else if (n == 2) {
@@ -32,6 +37,9 @@ namespace func {
     }
 
     std::string to_days_hours_minutes_seconds(uint64_t nanoseconds) {
+        if (nanoseconds > std::numeric_limits<uint64_t>::max() || nanoseconds < std::numeric_limits<uint64_t>::min()) {
+            throw std::invalid_argument("Argument 'nanoseconds' is out of range for 'int64_t' type.");
+        }
         constexpr uint64_t ns_in_day = 86400000000000;
         constexpr uint64_t ns_in_hour = 3600000000000;
         constexpr uint64_t ns_in_min = 60000000000;
@@ -50,14 +58,23 @@ namespace func {
     
         auto nanosecs = nanoseconds;
     
-        return zero_padded_num(std::to_string(days), 2) + ":" +
-        zero_padded_num(std::to_string(hours), 2) + ":" +
-        zero_padded_num(std::to_string(minutes), 2) + ":" +
-        zero_padded_num(std::to_string(seconds), 2) + "." +
-        zero_padded_num(std::to_string(nanosecs), 9);
+        try {
+            return zero_padded_num(std::to_string(days), 2) + ":" +
+            zero_padded_num(std::to_string(hours), 2) + ":" +
+            zero_padded_num(std::to_string(minutes), 2) + ":" +
+            zero_padded_num(std::to_string(seconds), 2) + "." +
+            zero_padded_num(std::to_string(nanosecs), 9);
+        } catch (std::invalid_argument const& ex) {
+            std::cout << ex.what() << '\n';
+        }
+
+        return "";
     }
 
     std::string zero_padded_num(std::string str, size_t field_width) {
+        if (field_width > std::numeric_limits<size_t>::max() || field_width < std::numeric_limits<size_t>::min()) {
+            throw std::invalid_argument("Argument 'field_width' is out of range for 'size_t' type in this case.");
+        }
         int precision = field_width - std::min(field_width, str.size());
         return std::string(precision, '0').append(str);
     }
@@ -72,6 +89,11 @@ namespace func {
 
     std::string replace_char(char target_char, char replacement_char, std::string target_str) {
         //Replace all occurrences of a given char in a std::string with another.
+        if (target_char > std::numeric_limits<char>::max() || target_char < std::numeric_limits<char>::min()) {
+            throw std::invalid_argument("Argument 'target_char' is out of range for 'char' type.");
+        } else if (replacement_char > std::numeric_limits<char>::max() || replacement_char < std::numeric_limits<char>::min()) {
+            throw std::invalid_argument("Argument 'target_char' is out of range for 'char' type.");
+        }
         std::replace(target_str.begin(), target_str.end(), target_char, replacement_char);
         return target_str;
     }

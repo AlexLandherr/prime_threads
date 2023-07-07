@@ -10,6 +10,7 @@
 #include <array>
 #include <ctime>
 #include <fstream>
+#include <stdexcept>
 #include "include/functions.h"
 
 void primes_in_range(uint64_t lower_limit, uint64_t upper_limit);
@@ -33,7 +34,12 @@ int main() {
     std::cout << "    ****    " << '\n';
 
     auto UTC_prog_start_time = std::chrono::system_clock::now();
-    std::string log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
+    std::string log_file_name_str = "";
+    try {
+        log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
+    } catch (std::invalid_argument const& ex) {
+        std::cout << ex.what() << '\n';
+    }
 
     constexpr int repeat_val = 10;
     std::array<uint64_t, repeat_val> iteration_length_arr;
@@ -50,10 +56,10 @@ int main() {
     std::array<int, 3> valid_modes = {0, 1, 2};
     int mode_select = 0;
 
-    std::chrono::_V2::steady_clock::time_point prog_start_time;
-    std::chrono::_V2::steady_clock::time_point prog_stop_time;
-    uint64_t prog_runtime_nanoseconds = 0;
-    std::chrono::duration<uint64_t, std::nano> elapsed_prog_runtime;
+    std::chrono::_V2::steady_clock::time_point search_start_time;
+    std::chrono::_V2::steady_clock::time_point search_stop_time;
+    uint64_t search_runtime_nanoseconds = 0;
+    std::chrono::duration<uint64_t, std::nano> elapsed_search_runtime;
 
     ldiv_t result;
 
@@ -70,29 +76,36 @@ int main() {
         std::cout << "2. Exit program." << '\n';
         std::cout << "Enter one of the listed values: ";
         std::cin >> mode_select;
-        if (std::find(std::begin(valid_modes), std::end(valid_modes), mode_select) != std::end(valid_modes)) {
+        if (!std::cin) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cerr << "\n\nThat's an invalid input! Please try again." << '\n';
+        } else if (std::find(std::begin(valid_modes), std::end(valid_modes), mode_select) != std::end(valid_modes)) {
             break;
         } else {
-            std::cout << "Invalid mode select, try again!" << '\n';
+            std::cout << "\nInvalid mode select, try again!" << '\n';
         }
     }
 
     switch (mode_select) {
         case 0: {
             //Singlethreaded.
-            std::cout << '\n';
-            std::cout << "Starting singlethreaded benchmark..." << '\n';
+            std::cout << "\nStarting singlethreaded benchmark..." << '\n';
             
             //Log UTC time and print to std::cout.
-            auto UTC_start_time = std::chrono::system_clock::now();
-            std::cout << "\nStarted at: " << func::to_UTC(UTC_start_time) << '\n';
-            prog_start_time = std::chrono::steady_clock::now();
+            auto UTC_search_start_time = std::chrono::system_clock::now();
+            std::cout << "\nStarted at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            search_start_time = std::chrono::steady_clock::now();
 
             for (int k = 0; k < repeat_val; k++) {
                 std::cout << "Iteration " << (k + 1) << " of " << repeat_val << " Runtime (ns): ";
                 auto iteration_start_time = std::chrono::steady_clock::now();
 
-                primes_in_range(lower_search_limit, upper_search_limit);
+                try {
+                    primes_in_range(lower_search_limit, upper_search_limit);
+                } catch (std::invalid_argument const& ex) {
+                    std::cout << ex.what() << '\n';
+                }
 
                 auto iteration_stop_time = std::chrono::steady_clock::now();
                 std::chrono::duration<uint64_t, std::nano> elapsed_single_iteration = iteration_stop_time - iteration_start_time; //how many nanoseconds have elapsed.
@@ -102,26 +115,34 @@ int main() {
 
             avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
 
-            prog_stop_time = std::chrono::steady_clock::now();
-            elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
-            prog_runtime_nanoseconds = elapsed_prog_runtime.count();
+            search_stop_time = std::chrono::steady_clock::now();
+            elapsed_search_runtime = search_stop_time - search_start_time; //how many nanoseconds have elapsed.
+            search_runtime_nanoseconds = elapsed_search_runtime.count();
 
             std::cout << "Prime singlethreaded benchmark is done!" << '\n';
 
             //Log UTC time and print to std::cout.
-            auto UTC_stop_time = std::chrono::system_clock::now();
-            std::cout << "\nStopped at: " << func::to_UTC(UTC_stop_time) << '\n';
+            auto UTC_search_stop_time = std::chrono::system_clock::now();
+            std::cout << "\nStopped at: " << func::to_UTC(UTC_search_stop_time) << '\n';
 
             std::cout << "\n**** Results ****" << '\n';
             std::cout << "Program mode is: Singlethreaded" << '\n';
-            std::cout << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
-            std::cout << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
-            std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            std::cout << "Search started at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            std::cout << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
+            try {
+                std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             std::cout << "\n";
-            std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
+            std::cout << "Search ran for: " << search_runtime_nanoseconds << " ns" << '\n';
             std::cout << "\n";
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-            std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            try {
+                std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             std::cout << "\n";
             std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
@@ -130,14 +151,22 @@ int main() {
             std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::out};
             log_fs << "**** Results ****" << '\n';
             log_fs << "Program mode is: Singlethreaded" << '\n';
-            log_fs << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
-            log_fs << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
-            log_fs << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            log_fs << "Search started at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            log_fs << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
+            try {
+                log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             log_fs << '\n';
-            log_fs << "Program ran for: " << std::to_string(prog_runtime_nanoseconds) << " ns" << '\n';
+            log_fs << "Search ran for: " << std::to_string(search_runtime_nanoseconds) << " ns" << '\n';
             log_fs << '\n';
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-            log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            try {
+                log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
@@ -151,9 +180,8 @@ int main() {
         }
         case 1: {
             //Multithreaded.
-            std::cout << '\n';
             result = std::div(upper_search_limit, (long) thread_count);
-            std::cout << "Numerator (also upper search limit): " << upper_search_limit << '\n';
+            std::cout << "\nNumerator (also upper search limit): " << upper_search_limit << '\n';
             std::cout << "Denominator (also how many threads): " << thread_count << '\n';
             std::cout << "Quotient: " << result.quot << '\n';
             std::cout << "Remainder: " << result.rem << '\n';
@@ -178,9 +206,9 @@ int main() {
 
             std::cout << "Starting multithreaded prime benchmark..." << '\n';
             //Log UTC time and print to std::cout.
-            auto UTC_start_time = std::chrono::system_clock::now();
-            std::cout << "\nStarted at: " << func::to_UTC(UTC_start_time) << '\n';
-            prog_start_time = std::chrono::steady_clock::now();
+            auto UTC_search_start_time = std::chrono::system_clock::now();
+            std::cout << "\nStarted at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            search_start_time = std::chrono::steady_clock::now();
 
             for (int k = 0; k < repeat_val; k++) {
                 std::cout << "Iteration " << (k + 1) << " of " << repeat_val << " Runtime (ns): ";
@@ -190,7 +218,11 @@ int main() {
                 auto iteration_start_time = std::chrono::steady_clock::now();
                 //Create and start main threads.
                 for (unsigned int i = 0; i < thread_count; i++) {
-                    main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
+                    try {
+                        main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
+                    } catch (std::invalid_argument const& ex) {
+                        std::cout << ex.what() << '\n';
+                    }
                 }
 
                 //Join main threads.
@@ -200,9 +232,13 @@ int main() {
 
                 //Create remainder thread (if needed).
                 if (result.rem != 0) {
-                    std::thread remainder_thread = std::thread(primes_in_range, remainder_range_start, remainder_range_end);
+                    try {
+                        std::thread remainder_thread = std::thread(primes_in_range, remainder_range_start, remainder_range_end);
                         
-                    remainder_thread.join();
+                        remainder_thread.join();
+                    } catch (std::invalid_argument const& ex) {
+                        std::cout << ex.what() << '\n';
+                    }
                 }
 
                 auto iteration_stop_time = std::chrono::steady_clock::now();
@@ -213,24 +249,28 @@ int main() {
 
             avg_search_time = std::accumulate(std::begin(iteration_length_arr), std::end(iteration_length_arr), avg_search_time) / repeat_val;
 
-            prog_stop_time = std::chrono::steady_clock::now();
-            elapsed_prog_runtime = prog_stop_time - prog_start_time; //how many nanoseconds have elapsed.
-            prog_runtime_nanoseconds = elapsed_prog_runtime.count();
+            search_stop_time = std::chrono::steady_clock::now();
+            elapsed_search_runtime = search_stop_time - search_start_time; //how many nanoseconds have elapsed.
+            search_runtime_nanoseconds = elapsed_search_runtime.count();
 
             std::cout << "Prime multithreaded benchmark is done!" << '\n';
 
             //Log UTC time and print to std::cout.
-            auto UTC_stop_time = std::chrono::system_clock::now();
-            std::cout << "\nStopped at: " << func::to_UTC(UTC_stop_time) << '\n';
+            auto UTC_search_stop_time = std::chrono::system_clock::now();
+            std::cout << "\nStopped at: " << func::to_UTC(UTC_search_stop_time) << '\n';
 
             std::cout << "\n**** Results ****" << '\n';
             std::cout << "Program mode is: Multithreaded" << '\n';
             std::cout << "Thread count: " << thread_count << '\n';
-            std::cout << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
-            std::cout << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
-            std::cout << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            std::cout << "Search started at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            std::cout << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
+            try {
+                std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             std::cout << "\n";
-            std::cout << "Program ran for: " << prog_runtime_nanoseconds << " ns" << '\n';
+            std::cout << "Search ran for: " << search_runtime_nanoseconds << " ns" << '\n';
             std::cout << "\n";
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
@@ -243,14 +283,18 @@ int main() {
             log_fs << "**** Results ****" << '\n';
             log_fs << "Program mode is: Multithreaded" << '\n';
             log_fs << "Thread count: " << thread_count << '\n';
-            log_fs << "Search started at: " << func::to_UTC(UTC_start_time) << '\n';
-            log_fs << "Search ended at: " << func::to_UTC(UTC_stop_time) << '\n';
-            log_fs << "Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime_nanoseconds) << '\n';
+            log_fs << "Search started at: " << func::to_UTC(UTC_search_start_time) << '\n';
+            log_fs << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
+            log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
             log_fs << '\n';
-            log_fs << "Program ran for: " << std::to_string(prog_runtime_nanoseconds) << " ns" << '\n';
+            log_fs << "Search ran for: " << std::to_string(search_runtime_nanoseconds) << " ns" << '\n';
             log_fs << '\n';
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-            log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            try {
+                log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            } catch (std::invalid_argument const& ex) {
+                std::cout << ex.what() << '\n';
+            }
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
@@ -277,15 +321,26 @@ int main() {
         std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
         log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
         log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
+        std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
+        log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
     
     return 0;
 }
 
 void primes_in_range(uint64_t lower_limit, uint64_t upper_limit) {
+    if (lower_limit > std::numeric_limits<uint64_t>::max() || lower_limit < std::numeric_limits<uint64_t>::min()) {
+        throw std::invalid_argument("'lower_limit' argument was out of range for 'uint64_t' type!");
+    } else if (upper_limit > std::numeric_limits<uint64_t>::max() || upper_limit < std::numeric_limits<uint64_t>::min()) {
+        throw std::invalid_argument("'upper_limit' argument was out of range for 'uint64_t' type!");
+    }
     unsigned int count = 0;
     for (uint64_t i = lower_limit; i < upper_limit + 1; i++) {
-        if (func::prime::is_prime(i)) {
-            count++;
+        try {
+            if (func::prime::is_prime(i)) {
+                count++;
+            }
+        } catch (std::invalid_argument const& ex) {
+            std::cout << ex.what() << '\n';
         }
     }
 
