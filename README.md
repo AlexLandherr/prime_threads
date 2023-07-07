@@ -25,7 +25,32 @@ Run:
 ```
 
 # Performance Examples
-Run on my development machine which sports an i7-12700H and runs Ubuntu 22.04.2 LTS 64-bit:
+Specs of my dev machine:
+```
+alexl@PD70PNP:~$ neofetch
+            .-/+oossssoo+/-.               alexl@PD70PNP 
+        `:+ssssssssssssssssss+:`           ------------- 
+      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 22.04.2 LTS x86_64 
+    .ossssssssssssssssssdMMMNysssso.       Host: PD5x_7xPNP_PNR_PNN_PNT 
+   /ssssssssssshdmmNNmmyNMMMMhssssss/      Kernel: 6.1.0-1015-oem 
+  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 20 hours, 8 mins 
+ /sssssssshNMMMyhhyyyyhmNMMMNhssssssss/    Packages: 2048 (dpkg), 16 (snap) 
+.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Shell: bash 5.1.16 
++sssshhhyNMMNyssssssssssssyNMMMysssssss+   Resolution: 1920x1080 
+ossyNMMMNyMMhsssssssssssssshmmmhssssssso   DE: GNOME 42.5 
+ossyNMMMNyMMhsssssssssssssshmmmhssssssso   WM: Mutter 
++sssshhhyNMMNyssssssssssssyNMMMysssssss+   WM Theme: Adwaita 
+.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Theme: Yaru [GTK2/3] 
+ /sssssssshNMMMyhhyyyyhdNMMMNhssssssss/    Icons: Yaru [GTK2/3] 
+  +sssssssssdmydMMMMMMMMddddyssssssss+     Terminal: gnome-terminal 
+   /ssssssssssshdmNNNNmyNMMMMhssssss/      CPU: 12th Gen Intel i7-12700H (20) @ 4.600GHz 
+    .ossssssssssssssssssdMMMNysssso.       GPU: NVIDIA GeForce RTX 3060 Mobile / Max-Q 
+      -+sssssssssssssssssyyyssss+-         GPU: Intel Alder Lake-P 
+        `:+ssssssssssssssssss+:`           Memory: 3480MiB / 15691MiB 
+            .-/+oossssoo+/-.
+```
+
+Example of my results at maximum CPU power limits configurable from Ubuntu:
 ```
 Program mode is: Multithreaded
 Thread count: 20
