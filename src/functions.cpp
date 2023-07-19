@@ -38,7 +38,7 @@ namespace func {
 
     std::string to_days_hours_minutes_seconds(uint64_t nanoseconds) {
         if (nanoseconds > std::numeric_limits<uint64_t>::max() || nanoseconds < std::numeric_limits<uint64_t>::min()) {
-            throw std::invalid_argument("Argument 'nanoseconds' is out of range for 'int64_t' type.");
+            throw std::invalid_argument("Argument 'nanoseconds' is out of range for 'uint64_t' type.");
         }
         constexpr uint64_t ns_in_day = 86400000000000;
         constexpr uint64_t ns_in_hour = 3600000000000;
