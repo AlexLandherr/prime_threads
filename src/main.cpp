@@ -306,13 +306,15 @@ int main() {
 
             break;
         }
-        case 2:
+        case 2: {
             //Exit program.
             std::cout << "Exited program." << '\n';
             break;
-        default:
+        }
+        default: {
             std::cout << "Defaulted to exiting program since no valid input was made." << '\n';
             std::exit(EXIT_FAILURE);
+        }
         }
 
         auto UTC_prog_stop_time = std::chrono::system_clock::now();
