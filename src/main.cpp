@@ -37,7 +37,9 @@ int main() {
     std::string log_file_name_str = "";
     try {
         log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
-    } catch (std::invalid_argument const& ex) {
+    } catch (const std::invalid_argument& ex) {
+        std::cout << ex.what() << '\n';
+    } catch (const std::exception& ex) {
         std::cout << ex.what() << '\n';
     }
 
@@ -103,7 +105,9 @@ int main() {
 
                 try {
                     primes_in_range(lower_search_limit, upper_search_limit);
-                } catch (std::invalid_argument const& ex) {
+                } catch (const std::invalid_argument& ex) {
+                    std::cout << ex.what() << '\n';
+                } catch (const std::exception& ex) {
                     std::cout << ex.what() << '\n';
                 }
 
@@ -131,7 +135,9 @@ int main() {
             std::cout << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
             try {
                 std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             std::cout << "\n";
@@ -140,7 +146,9 @@ int main() {
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
                 std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             std::cout << "\n";
@@ -155,7 +163,9 @@ int main() {
             log_fs << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
             try {
                 log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             log_fs << '\n';
@@ -164,7 +174,9 @@ int main() {
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
                 log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             log_fs << '\n';
@@ -220,7 +232,9 @@ int main() {
                 for (unsigned int i = 0; i < thread_count; i++) {
                     try {
                         main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
-                    } catch (std::invalid_argument const& ex) {
+                    } catch (const std::invalid_argument& ex) {
+                        std::cout << ex.what() << '\n';
+                    } catch (const std::exception& ex) {
                         std::cout << ex.what() << '\n';
                     }
                 }
@@ -236,7 +250,9 @@ int main() {
                         std::thread remainder_thread = std::thread(primes_in_range, remainder_range_start, remainder_range_end);
                         
                         remainder_thread.join();
-                    } catch (std::invalid_argument const& ex) {
+                    } catch (const std::invalid_argument& ex) {
+                        std::cout << ex.what() << '\n';
+                    } catch (const std::exception& ex) {
                         std::cout << ex.what() << '\n';
                     }
                 }
@@ -266,14 +282,22 @@ int main() {
             std::cout << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
             try {
                 std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             std::cout << "\n";
             std::cout << "Search ran for: " << search_runtime_nanoseconds << " ns" << '\n';
             std::cout << "\n";
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
-            std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            try {
+                std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
+                std::cout << ex.what() << '\n';
+            }
             std::cout << "\n";
             std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
@@ -285,14 +309,22 @@ int main() {
             log_fs << "Thread count: " << thread_count << '\n';
             log_fs << "Search started at: " << func::to_UTC(UTC_search_start_time) << '\n';
             log_fs << "Search ended at: " << func::to_UTC(UTC_search_stop_time) << '\n';
-            log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
+            try {
+                log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
+                std::cout << ex.what() << '\n';
+            }
             log_fs << '\n';
             log_fs << "Search ran for: " << std::to_string(search_runtime_nanoseconds) << " ns" << '\n';
             log_fs << '\n';
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
                 log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
-            } catch (std::invalid_argument const& ex) {
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             log_fs << '\n';
@@ -320,11 +352,17 @@ int main() {
         auto UTC_prog_stop_time = std::chrono::system_clock::now();
 
         //Write start and end UTC times for complete program run.
-        std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
-        log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
-        log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
-        std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
-        log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
+        try {
+            std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
+            log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
+            log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
+            std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
+            log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
+        } catch (const std::invalid_argument& ex) {
+            std::cout << ex.what() << '\n';
+        } catch (const std::exception& ex) {
+            std::cout << ex.what() << '\n';
+        }
     
     return 0;
 }
