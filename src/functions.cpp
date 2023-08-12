@@ -14,6 +14,7 @@ namespace func {
     namespace prime {
 
         bool is_prime(int64_t n) {
+            //Checks if a single signed 64-bit integer is a prime number.
             if (n > std::numeric_limits<int64_t>::max() || n < std::numeric_limits<int64_t>::min()) {
                 throw std::invalid_argument("Argument 'n' is out of range for 'int64_t' type.");
             }
@@ -37,6 +38,8 @@ namespace func {
     }
 
     std::string to_days_hours_minutes_seconds(uint64_t nanoseconds) {
+        /*Converts an unsigned 64-bit integer representing nanoseconds to a std::string that
+        equals the number of days, hours, minutes, seconds and fractions of a second said value converts to.*/
         if (nanoseconds > std::numeric_limits<uint64_t>::max() || nanoseconds < std::numeric_limits<uint64_t>::min()) {
             throw std::invalid_argument("Argument 'nanoseconds' is out of range for 'uint64_t' type.");
         }
@@ -72,6 +75,7 @@ namespace func {
     }
 
     std::string zero_padded_num(std::string str, size_t field_width) {
+        //Takes a std::string representing an integer and zero-padds it to a given width to ensure a fixed width std::string as a result.
         if (field_width > std::numeric_limits<size_t>::max() || field_width < std::numeric_limits<size_t>::min()) {
             throw std::invalid_argument("Argument 'field_width' is out of range for 'size_t' type in this case.");
         }

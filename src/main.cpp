@@ -352,16 +352,18 @@ int main() {
         auto UTC_prog_stop_time = std::chrono::system_clock::now();
 
         //Write start and end UTC times for complete program run.
-        try {
-            std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
-            log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
-            log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
-            std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
-            log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
-        } catch (const std::invalid_argument& ex) {
-            std::cout << ex.what() << '\n';
-        } catch (const std::exception& ex) {
-            std::cout << ex.what() << '\n';
+        if (mode_select != 2) {
+            try {
+                std::fstream log_fs{"logs/Prime_Threads_Log_File_" + log_file_name_str + ".txt", std::ios::app};
+                log_fs << "Program started at: " << func::to_UTC(UTC_prog_start_time) << '\n';
+                log_fs << "Program ended at: " << func::to_UTC(UTC_prog_stop_time) << '\n';
+                std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
+                log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
+            } catch (const std::invalid_argument& ex) {
+                std::cout << ex.what() << '\n';
+            } catch (const std::exception& ex) {
+                std::cout << ex.what() << '\n';
+            }
         }
     
     return 0;
