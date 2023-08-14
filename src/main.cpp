@@ -145,14 +145,14 @@ int main() {
             std::cout << "\n";
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
-                std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+                std::cout << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
                 std::cout << ex.what() << '\n';
             } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             std::cout << "\n";
-            std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
+            std::cout << "Average search time: " << static_cast<uint64_t>(avg_search_time) << " ns" << '\n';
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
 
             //Writing results to unique log file with time stamp as file name.
@@ -173,18 +173,18 @@ int main() {
             log_fs << '\n';
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
-                log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+                log_fs << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
                 std::cout << ex.what() << '\n';
             } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             log_fs << '\n';
-            log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
+            log_fs << "Average search time: " << std::to_string(static_cast<uint64_t>(avg_search_time)) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
             log_fs << "\n**** Runtime for each iteration ****" << '\n';
             for (int i = 0; i < repeat_val; i++) {
-                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << (uint64_t) iteration_length_arr[i] << '\n';
+                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << static_cast<uint64_t>(iteration_length_arr[i]) << '\n';
             }
             log_fs << '\n';
 
@@ -192,7 +192,7 @@ int main() {
         }
         case 1: {
             //Multithreaded.
-            result = std::div(upper_search_limit, (long) thread_count);
+            result = std::div(upper_search_limit, static_cast<long>(thread_count));
             std::cout << "\nNumerator (also upper search limit): " << upper_search_limit << '\n';
             std::cout << "Denominator (also how many threads): " << thread_count << '\n';
             std::cout << "Quotient: " << result.quot << '\n';
@@ -292,14 +292,14 @@ int main() {
             std::cout << "\n";
             std::cout << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
-                std::cout << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+                std::cout << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
                 std::cout << ex.what() << '\n';
             } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             std::cout << "\n";
-            std::cout << "Average search time: " << (uint64_t) avg_search_time << " ns" << '\n';
+            std::cout << "Average search time: " << static_cast<uint64_t>(avg_search_time) << " ns" << '\n';
             std::cout << "Number of primes found is: " << prime_count / repeat_val << '\n';
 
             //Writing results to unique log file with time stamp as file name.
@@ -321,18 +321,18 @@ int main() {
             log_fs << '\n';
             log_fs << "Average time to find all primes between " << lower_search_limit << " and " << upper_search_limit << " was (DD:HH:MM:SS.SSSSSSSSS):" << '\n';
             try {
-                log_fs << func::to_days_hours_minutes_seconds((uint64_t) avg_search_time) << '\n';
+                log_fs << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
                 std::cout << ex.what() << '\n';
             } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
             log_fs << '\n';
-            log_fs << "Average search time: " << std::to_string((uint64_t) avg_search_time) << " ns" << '\n';
+            log_fs << "Average search time: " << std::to_string(static_cast<uint64_t>(avg_search_time)) << " ns" << '\n';
             log_fs << "Number of primes found is: " << std::to_string(prime_count / repeat_val) << '\n';
             log_fs << "\n**** Runtime for each iteration ****" << '\n';
             for (int i = 0; i < repeat_val; i++) {
-                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << (uint64_t) iteration_length_arr[i] << '\n';
+                log_fs << "Iteration " << (i + 1) << " of " << repeat_val << " Runtime (ns): " << static_cast<uint64_t>(iteration_length_arr[i]) << '\n';
             }
             log_fs << '\n';
 
