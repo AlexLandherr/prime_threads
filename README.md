@@ -25,6 +25,8 @@ Run:
 ```
 
 # Performance Examples
+## My Hardware
+### Development System Results
 Specs of my dev machine:
 ```
 alexl@PD70PNP:~$ neofetch
@@ -81,7 +83,64 @@ Iteration 10 of 10 Runtime (ns): 5970095523
 Program started at: 2023-07-05 08:33:04 UTC
 Program ended at: 2023-07-05 08:34:11 UTC
 ```
+### On a ASUS PN64-E1
+Specs of PN64-E1:
+```
+alexl@memory-alpha:~$ neofetch
+       _,met$$$$$gg.          alexl@memory-alpha
+    ,g$$$$$$$$$$$$$$$P.       ------------------
+  ,g$$P"     """Y$$.".        OS: Debian GNU/Linux 12 (bookworm) x86_64
+ ,$$P'              `$$$.     Host: MINIPC PN64-E1
+',$$P       ,ggs.     `$$b:   Kernel: 6.1.0-11-amd64
+`d$$'     ,$P"'   .    $$$    Uptime: 3 hours, 5 mins
+ $$P      d$'     ,    $$P    Packages: 517 (dpkg)
+ $$:      $$.   -    ,d$$'    Shell: bash 5.2.15
+ $$;      Y$b._   _,d$P'      Terminal: /dev/pts/0
+ Y$$.    `.`"Y$$$$P"'         CPU: 13th Gen Intel i7-13700H (20) @ 4.800GHz
+ `$$b      "-.__              GPU: Intel Raptor Lake-P [UHD Graphics]
+  `Y$$                        Memory: 310MiB / 15709MiB
+   `Y$$.
+     `$$b.
+       `Y$$b.
+          `"Y$b._
+              `"""
+```
 
+Example run on PN64-E1:
+```
+**** Results ****
+Program mode is: Multithreaded
+Thread count: 20
+Search started at: 2023-09-05 18:50:00 UTC
+Search ended at: 2023-09-05 18:51:03 UTC
+Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:01:02.484791592
+
+Search ran for: 62484791592 ns
+
+Average time to find all primes between 1 and 100000000 was (DD:HH:MM:SS.SSSSSSSSS):
+00:00:00:06.248471420
+
+Average search time: 6248471420 ns
+Number of primes found is: 5761455
+
+**** Runtime for each iteration ****
+Iteration 1 of 10 Runtime (ns): 6170955048
+Iteration 2 of 10 Runtime (ns): 6422582420
+Iteration 3 of 10 Runtime (ns): 6126953291
+Iteration 4 of 10 Runtime (ns): 6176520018
+Iteration 5 of 10 Runtime (ns): 6097712673
+Iteration 6 of 10 Runtime (ns): 6270516635
+Iteration 7 of 10 Runtime (ns): 6364187311
+Iteration 8 of 10 Runtime (ns): 6309591198
+Iteration 9 of 10 Runtime (ns): 6245590917
+Iteration 10 of 10 Runtime (ns): 6300104691
+
+Program started at: 2023-09-05 18:49:53 UTC
+Program ended at: 2023-09-05 18:51:03 UTC
+Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:01:09.775377205
+```
+## Other People's Hardware
+### Jeff Geerling's Results
 A run on a 96-core Ampere Altra ARM CPU thanks to [@geerlingguy](https://github.com/geerlingguy):
 - [Ampere Altra Developer Platform](https://github.com/geerlingguy/sbc-reviews/issues/19)
 - [Link to Jeff Geerling's results](https://github.com/geerlingguy/sbc-reviews/issues/19#issuecomment-1620919247)
