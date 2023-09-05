@@ -8,6 +8,7 @@
 #include <numeric>
 #include <atomic>
 #include <array>
+#include <algorithm>
 #include <ctime>
 #include <fstream>
 #include <stdexcept>
