@@ -30,58 +30,59 @@ Run:
 Specs of my dev machine:
 ```
 alexl@PD70PNP:~$ neofetch
-            .-/+oossssoo+/-.               alexl@PD70PNP 
-        `:+ssssssssssssssssss+:`           ------------- 
-      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 22.04.2 LTS x86_64 
-    .ossssssssssssssssssdMMMNysssso.       Host: PD5x_7xPNP_PNR_PNN_PNT 
-   /ssssssssssshdmmNNmmyNMMMMhssssss/      Kernel: 6.1.0-1015-oem 
-  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 20 hours, 8 mins 
- /sssssssshNMMMyhhyyyyhmNMMMNhssssssss/    Packages: 2048 (dpkg), 16 (snap) 
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Shell: bash 5.1.16 
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Resolution: 1920x1080 
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso   DE: GNOME 42.5 
-ossyNMMMNyMMhsssssssssssssshmmmhssssssso   WM: Mutter 
-+sssshhhyNMMNyssssssssssssyNMMMysssssss+   WM Theme: Adwaita 
-.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Theme: Yaru [GTK2/3] 
- /sssssssshNMMMyhhyyyyhdNMMMNhssssssss/    Icons: Yaru [GTK2/3] 
-  +sssssssssdmydMMMMMMMMddddyssssssss+     Terminal: gnome-terminal 
-   /ssssssssssshdmNNNNmyNMMMMhssssss/      CPU: 12th Gen Intel i7-12700H (20) @ 4.600GHz 
-    .ossssssssssssssssssdMMMNysssso.       GPU: NVIDIA GeForce RTX 3060 Mobile / Max-Q 
-      -+sssssssssssssssssyyyssss+-         GPU: Intel Alder Lake-P 
-        `:+ssssssssssssssssss+:`           Memory: 3480MiB / 15691MiB 
-            .-/+oossssoo+/-.
+       _,met$$$$$gg.          alexl@PD70PNP 
+    ,g$$$$$$$$$$$$$$$P.       ------------- 
+  ,g$$P"     """Y$$.".        OS: Debian GNU/Linux 12 (bookworm) x86_64 
+ ,$$P'              `$$$.     Host: PD5x_7xPNP_PNR_PNN_PNT 
+',$$P       ,ggs.     `$$b:   Kernel: 6.1.0-13-amd64 
+`d$$'     ,$P"'   .    $$$    Uptime: 1 day, 4 hours, 45 mins 
+ $$P      d$'     ,    $$P    Packages: 1748 (dpkg) 
+ $$:      $$.   -    ,d$$'    Shell: bash 5.2.15 
+ $$;      Y$b._   _,d$P'      Resolution: 1920x1080 
+ Y$$.    `.`"Y$$$$P"'         DE: GNOME 43.6 
+ `$$b      "-.__              WM: Mutter 
+  `Y$$                        WM Theme: Adwaita 
+   `Y$$.                      Theme: Adwaita [GTK2/3] 
+     `$$b.                    Icons: Adwaita [GTK2/3] 
+       `Y$$b.                 Terminal: gnome-terminal 
+          `"Y$b._             CPU: 12th Gen Intel i7-12700H (20) @ 4.600GHz 
+              `"""            GPU: NVIDIA GeForce RTX 3060 Mobile / Max-Q 
+                              GPU: Intel Alder Lake-P 
+                              Memory: 2912MiB / 15693MiB
 ```
 
-Example of my results at maximum CPU power limits configurable from Ubuntu:
+Example of my results at maximum CPU power limits configurable from Debian:
 ```
+**** Results ****
 Program mode is: Multithreaded
 Thread count: 20
-Search started at: 2023-07-05 08:33:13 UTC
-Search ended at: 2023-07-05 08:34:11 UTC
-Program ran for total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:00:58.569630496
+Search started at: 2023-10-22 16:30:55 UTC
+Search ended at: 2023-10-22 16:32:12 UTC
+Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:01:17.107750325
 
-Program ran for: 58569630496 ns
+Search ran for: 77107750325 ns
 
 Average time to find all primes between 1 and 100000000 was (DD:HH:MM:SS.SSSSSSSSS):
-00:00:00:05.856952223
+00:00:00:07.710763478
 
-Average search time: 5856952223 ns
+Average search time: 7710763478 ns
 Number of primes found is: 5761455
 
 **** Runtime for each iteration ****
-Iteration 1 of 10 Runtime (ns): 5806562542
-Iteration 2 of 10 Runtime (ns): 5679193186
-Iteration 3 of 10 Runtime (ns): 5739044034
-Iteration 4 of 10 Runtime (ns): 5868012868
-Iteration 5 of 10 Runtime (ns): 5759130597
-Iteration 6 of 10 Runtime (ns): 5850852134
-Iteration 7 of 10 Runtime (ns): 6006729002
-Iteration 8 of 10 Runtime (ns): 5994649762
-Iteration 9 of 10 Runtime (ns): 5895252589
-Iteration 10 of 10 Runtime (ns): 5970095523
+Iteration 1 of 10 Runtime (ns): 5532404201
+Iteration 2 of 10 Runtime (ns): 5927623802
+Iteration 3 of 10 Runtime (ns): 7759769464
+Iteration 4 of 10 Runtime (ns): 8232699929
+Iteration 5 of 10 Runtime (ns): 8213834288
+Iteration 6 of 10 Runtime (ns): 8312342055
+Iteration 7 of 10 Runtime (ns): 8300434394
+Iteration 8 of 10 Runtime (ns): 8311362315
+Iteration 9 of 10 Runtime (ns): 8145469869
+Iteration 10 of 10 Runtime (ns): 8371694464
 
-Program started at: 2023-07-05 08:33:04 UTC
-Program ended at: 2023-07-05 08:34:11 UTC
+Program started at: 2023-10-22 16:30:48 UTC
+Program ended at: 2023-10-22 16:32:12 UTC
+Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:01:24.090159261
 ```
 ### On a ASUS PN64-E1
 Specs of PN64-E1:
