@@ -140,6 +140,63 @@ Program started at: 2023-09-05 18:49:53 UTC
 Program ended at: 2023-09-05 18:51:03 UTC
 Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:01:09.775377205
 ```
+### On a Raspberry Pi 5 Model B 8GB
+Specs of RPi5B 8GB:
+```
+pi@raspberrypi:~ $ neofetch
+       _,met$$$$$gg.          pi@raspberrypi
+    ,g$$$$$$$$$$$$$$$P.       --------------
+  ,g$$P"     """Y$$.".        OS: Debian GNU/Linux 12 (bookworm) aarch64
+ ,$$P'              `$$$.     Host: Raspberry Pi 5 Model B Rev 1.0
+',$$P       ,ggs.     `$$b:   Kernel: 6.1.0-rpi7-rpi-2712
+`d$$'     ,$P"'   .    $$$    Uptime: 36 mins
+ $$P      d$'     ,    $$P    Packages: 685 (dpkg)
+ $$:      $$.   -    ,d$$'    Shell: bash 5.2.15
+ $$;      Y$b._   _,d$P'      Terminal: /dev/pts/0
+ Y$$.    `.`"Y$$$$P"'         CPU: (4) @ 2.400GHz
+ `$$b      "-.__              Memory: 137MiB / 8053MiB
+  `Y$$
+   `Y$$.
+     `$$b.
+       `Y$$b.
+          `"Y$b._
+              `"""
+```
+
+Example run on RPi5B 8GB:
+```
+**** Results ****
+Program mode is: Multithreaded
+Thread count: 4
+Search started at: 2023-12-06 15:17:20 UTC
+Search ended at: 2023-12-06 15:23:30 UTC
+Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:06:10.319883460
+
+Search ran for: 370319883460 ns
+
+Average time to find all primes between 1 and 100000000 was (DD:HH:MM:SS.SSSSSSSSS):
+00:00:00:37.031968584
+
+Average search time: 37031968584 ns
+Number of primes found is: 5761455
+
+**** Runtime for each iteration ****
+Iteration 1 of 10 Runtime (ns): 37076920033
+Iteration 2 of 10 Runtime (ns): 37024859094
+Iteration 3 of 10 Runtime (ns): 37026245968
+Iteration 4 of 10 Runtime (ns): 37025967193
+Iteration 5 of 10 Runtime (ns): 37024488825
+Iteration 6 of 10 Runtime (ns): 37025838049
+Iteration 7 of 10 Runtime (ns): 37024484180
+Iteration 8 of 10 Runtime (ns): 37024965662
+Iteration 9 of 10 Runtime (ns): 37041152829
+Iteration 10 of 10 Runtime (ns): 37024764015
+
+Program started at: 2023-12-06 15:17:07 UTC
+Program ended at: 2023-12-06 15:23:30 UTC
+Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): 00:00:06:23.294440756
+```
+
 ## Other People's Hardware
 ### Jeff Geerling's Results
 A run on a 96-core Ampere Altra ARM CPU thanks to [@geerlingguy](https://github.com/geerlingguy):
