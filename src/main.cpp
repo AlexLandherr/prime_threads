@@ -38,6 +38,7 @@ int main() {
     std::string log_file_name_str = "";
     try {
         log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
+        log_file_name_str = func::replace_char(':', '-', log_file_name_str);
     } catch (const std::invalid_argument& ex) {
         std::cout << ex.what() << '\n';
     } catch (const std::exception& ex) {
