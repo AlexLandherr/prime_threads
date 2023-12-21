@@ -1,3 +1,4 @@
+#include "include/functions.h"
 #include <iostream>
 #include <chrono>
 #include <string>
@@ -12,7 +13,7 @@
 #include <ctime>
 #include <fstream>
 #include <stdexcept>
-#include "include/functions.h"
+#include <filesystem>
 
 void primes_in_range(uint64_t lower_limit, uint64_t upper_limit);
 
@@ -31,6 +32,18 @@ int main() {
         default:
             std::cout << "System supports " << thread_count << " threads." << '\n';
             break;
+    }
+    std::cout << "    ****    " << '\n';
+
+    //Checking if 'logs' directory exists; if not then it's created.
+    std::filesystem::path directory_path{"logs"};
+    std::cout << "Checking '" << directory_path.string() << "' directory status..." << '\n';
+    if (std::filesystem::exists(directory_path)) {
+        std::cout << "'" << directory_path.string() << "' exists." << '\n';
+    } else {
+        std::cout  << "'" << directory_path.string() << "' directory does not exist or has changed name!" << '\n';
+        std::cout <<  "Creating '" << directory_path.string() << "' directory." << '\n';
+        std::filesystem::create_directory(directory_path);
     }
     std::cout << "    ****    " << '\n';
 
