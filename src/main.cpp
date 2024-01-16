@@ -53,9 +53,9 @@ int main() {
         log_file_name_str = func::replace_char(' ', '_', func::to_UTC(UTC_prog_start_time));
         log_file_name_str = func::replace_char(':', '-', log_file_name_str);
     } catch (const std::invalid_argument& ex) {
-        std::cout << ex.what() << '\n';
+        std::cerr << ex.what() << '\n';
     } catch (const std::exception& ex) {
-        std::cout << ex.what() << '\n';
+        std::cerr << ex.what() << '\n';
     }
 
     constexpr int repeat_val = 10;
@@ -100,7 +100,7 @@ int main() {
         } else if (std::find(std::begin(valid_modes), std::end(valid_modes), mode_select) != std::end(valid_modes)) {
             break;
         } else {
-            std::cout << "\nInvalid mode select, try again!" << '\n';
+            std::cerr << "\nInvalid mode select, try again!" << '\n';
         }
     }
 
@@ -121,9 +121,9 @@ int main() {
                 try {
                     primes_in_range(lower_search_limit, upper_search_limit);
                 } catch (const std::invalid_argument& ex) {
-                    std::cout << ex.what() << '\n';
+                    std::cerr << ex.what() << '\n';
                 } catch (const std::exception& ex) {
-                    std::cout << ex.what() << '\n';
+                    std::cerr << ex.what() << '\n';
                 }
 
                 auto iteration_stop_time = std::chrono::steady_clock::now();
@@ -151,9 +151,9 @@ int main() {
             try {
                 std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             std::cout << "\n";
             std::cout << "Search ran for: " << search_runtime_nanoseconds << " ns" << '\n';
@@ -162,9 +162,9 @@ int main() {
             try {
                 std::cout << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             std::cout << "\n";
             std::cout << "Average search time: " << static_cast<uint64_t>(avg_search_time) << " ns" << '\n';
@@ -179,9 +179,9 @@ int main() {
             try {
                 log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             log_fs << '\n';
             log_fs << "Search ran for: " << std::to_string(search_runtime_nanoseconds) << " ns" << '\n';
@@ -190,9 +190,9 @@ int main() {
             try {
                 log_fs << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string(static_cast<uint64_t>(avg_search_time)) << " ns" << '\n';
@@ -248,9 +248,9 @@ int main() {
                     try {
                         main_threads.push_back(std::thread(primes_in_range, start_of_range[i], end_of_range[i]));
                     } catch (const std::invalid_argument& ex) {
-                        std::cout << ex.what() << '\n';
+                        std::cerr << ex.what() << '\n';
                     } catch (const std::exception& ex) {
-                        std::cout << ex.what() << '\n';
+                        std::cerr << ex.what() << '\n';
                     }
                 }
 
@@ -266,9 +266,9 @@ int main() {
                         
                         remainder_thread.join();
                     } catch (const std::invalid_argument& ex) {
-                        std::cout << ex.what() << '\n';
+                        std::cerr << ex.what() << '\n';
                     } catch (const std::exception& ex) {
-                        std::cout << ex.what() << '\n';
+                        std::cerr << ex.what() << '\n';
                     }
                 }
 
@@ -298,7 +298,7 @@ int main() {
             try {
                 std::cout << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
                 std::cout << ex.what() << '\n';
             }
@@ -309,9 +309,9 @@ int main() {
             try {
                 std::cout << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             std::cout << "\n";
             std::cout << "Average search time: " << static_cast<uint64_t>(avg_search_time) << " ns" << '\n';
@@ -327,9 +327,9 @@ int main() {
             try {
                 log_fs << "Search ran for total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(search_runtime_nanoseconds) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             log_fs << '\n';
             log_fs << "Search ran for: " << std::to_string(search_runtime_nanoseconds) << " ns" << '\n';
@@ -338,9 +338,9 @@ int main() {
             try {
                 log_fs << func::to_days_hours_minutes_seconds(static_cast<uint64_t>(avg_search_time)) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
             log_fs << '\n';
             log_fs << "Average search time: " << std::to_string(static_cast<uint64_t>(avg_search_time)) << " ns" << '\n';
@@ -375,9 +375,9 @@ int main() {
                 std::chrono::duration<uint64_t, std::nano> prog_runtime = UTC_prog_stop_time - UTC_prog_start_time;
                 log_fs << "Program ran for a total of (DD:HH:MM:SS.SSSSSSSSS): " << func::to_days_hours_minutes_seconds(prog_runtime.count()) << '\n';
             } catch (const std::invalid_argument& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             } catch (const std::exception& ex) {
-                std::cout << ex.what() << '\n';
+                std::cerr << ex.what() << '\n';
             }
         }
     
@@ -397,7 +397,7 @@ void primes_in_range(uint64_t lower_limit, uint64_t upper_limit) {
                 count++;
             }
         } catch (std::invalid_argument const& ex) {
-            std::cout << ex.what() << '\n';
+            std::cerr << ex.what() << '\n';
         }
     }
 

@@ -76,7 +76,7 @@ namespace func {
 
     std::string zero_padded_num(std::string str, size_t field_width) {
         //Takes a std::string representing an integer and zero-padds it to a given width to ensure a fixed width std::string as a result.
-        if (field_width > std::numeric_limits<size_t>::max() || field_width < std::numeric_limits<size_t>::min()) {
+        if (field_width > std::numeric_limits<std::size_t>::max() || field_width < std::numeric_limits<std::size_t>::min()) {
             throw std::invalid_argument("Argument 'field_width' is out of range for 'size_t' type in this case.");
         }
         int precision = field_width - std::min(field_width, str.size());
