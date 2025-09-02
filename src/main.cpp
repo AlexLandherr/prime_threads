@@ -138,7 +138,7 @@ int main() {
             elapsed_search_runtime = search_stop_time - search_start_time; //how many nanoseconds have elapsed.
             search_runtime_nanoseconds = elapsed_search_runtime.count();
 
-            std::cout << "Prime singlethreaded benchmark is done!" << '\n';
+            std::cout << "Singlethreaded prime benchmark is done!" << '\n';
 
             //Log UTC time and print to std::cout.
             auto UTC_search_stop_time = std::chrono::system_clock::now();
@@ -284,7 +284,7 @@ int main() {
             elapsed_search_runtime = search_stop_time - search_start_time; //how many nanoseconds have elapsed.
             search_runtime_nanoseconds = elapsed_search_runtime.count();
 
-            std::cout << "Prime multithreaded benchmark is done!" << '\n';
+            std::cout << "Multithreaded prime benchmark is done!" << '\n';
 
             //Log UTC time and print to std::cout.
             auto UTC_search_stop_time = std::chrono::system_clock::now();
