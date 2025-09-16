@@ -65,8 +65,10 @@ int main() {
     constexpr uint64_t upper_search_limit = 100000000;
     int remainder_range_start = 0;
     int remainder_range_end = 0;
+
     std::vector<uint64_t> start_of_range = {};
     std::vector<uint64_t> end_of_range = {};
+    
     std::string choice;
     std::array<std::string, 4> yes_choices = {"Y", "y", "Yes", "yes"};
     std::array<std::string, 4> no_choices = {"N", "n", "No", "no"};
